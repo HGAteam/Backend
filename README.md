@@ -306,7 +306,7 @@ La documentación de la API ha sido generada automáticamente utilizando **Scrib
 - **Postman**: Herramienta para realizar pruebas de los endpoints de la API.
 
 ### Acceso a la documentación
-- **Documentación generada por Scribe**: [Documentación Scribe](http://localhost:8000/docs)
+- **Documentación generada por Scribe**: [Documentación Scribe](https://hgateam.com/docs)
 - **Colección de Postman**: [Postman Collection](https://app.getpostman.com/join-team?invite_code=ff51a5ed2e34d11f0dad7b9fc2931af09df457ac37da11c6f0462ff748127205)
 
 ### Endpoints principales

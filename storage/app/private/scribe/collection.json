@@ -1,0 +1,567 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "Backend API Documentation",
+        "_postman_id": "3ab44120-7a88-4632-9ccd-83288aefda97",
+        "description": "Documentaci\u00f3n de la API que consume SWAPI",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "API Autenticaci\u00f3n",
+            "description": "",
+            "item": [
+                {
+                    "name": "Iniciar sesi\u00f3n y obtener un token de acceso\n\nEste endpoint permite iniciar sesi\u00f3n con un usuario registrado.  \nPara acceder a los recursos protegidos de la API, debes usar el token generado en el encabezado `Authorization`.  \n\n**IMPORTANTE:**  \n- Si no tienes una cuenta, puedes registrarte utilizando el endpoint de registro.  \n- Tambi\u00e9n puedes solicitar un usuario de prueba.  \n- Una vez autenticado, el token obtenido debe ser enviado en todas las solicitudes protegidas.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"usuario@ejemplo.com\",\"password\":\"secret\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Credenciales inv\u00e1lidas.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Registrar un nuevo usuario\n\nEste endpoint permite registrar un nuevo usuario en la API. No se necesita autenticaci\u00f3n para esta solicitud.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Juan P\u00e9rez\",\"email\":\"usuario@ejemplo.com\",\"password\":\"secret\",\"password_confirmation\":\"secret\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Usuario registrado exitosamente.\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Juan P\u00e9rez\",\n    \"email\": \"usuario@ejemplo.com\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error en la validaci\u00f3n.\",\n  \"errors\": {\n    \"email\": [\"El campo email es obligatorio.\"]\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Cerrar sesi\u00f3n del usuario autenticado\n\nEste endpoint permite cerrar la sesi\u00f3n de un usuario autenticado.  \nSe debe enviar un **token v\u00e1lido** en el encabezado `Authorization`.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Sesi\u00f3n cerrada exitosamente.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"No se pudo cerrar la sesi\u00f3n.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Verificar si el usuario est\u00e1 autenticado\n\nEste endpoint permite verificar si el usuario est\u00e1 autenticado.  \nSe debe enviar un **token v\u00e1lido** en el encabezado `Authorization`.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/is-authenticated",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/is-authenticated"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Usuario autenticado.\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Juan P\u00e9rez\",\n    \"email\": \"usuario@ejemplo.com\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Usuario no autenticado.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "API | GET People",
+            "description": "",
+            "item": [
+                {
+                    "name": "Obtener una lista de personas\n\nEste endpoint devuelve una lista paginada de personajes de Star Wars.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/people",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "5",
+                                    "description": "N\u00famero de registros por p\u00e1gina. Default: 10.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "offset",
+                                    "value": "10",
+                                    "description": "N\u00famero de registros a omitir. Default: 0.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/people?limit=5&offset=10"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Operaci\u00f3n exitosa\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Luke Skywalker\",\n      \"height\": \"172\",\n      \"mass\": \"77\",\n      \"hair_color\": \"blond\",\n      \"skin_color\": \"fair\",\n      \"eye_color\": \"blue\",\n      \"birth_year\": \"19BBY\",\n      \"gender\": \"male\"\n    }\n  ],\n  \"pagination\": {\n    \"total\": 82,\n    \"limit\": 10,\n    \"offset\": 0,\n    \"next\": \"\/api\/people?limit=10&offset=10\",\n    \"previous\": null\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"No se encontraron personas.\",\n  \"errors\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error interno del servidor.\",\n  \"error\": \"Detalles del error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Obtener los detalles de una persona espec\u00edfica\n\nEste endpoint devuelve la informaci\u00f3n detallada de una persona por su ID.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/people\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/people\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "El ID de la persona."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Operaci\u00f3n exitosa\",\n  \"data\": {\n      \"id\": 1,\n      \"name\": \"Luke Skywalker\",\n      \"height\": \"172\",\n      \"mass\": \"77\",\n      \"hair_color\": \"blond\",\n      \"skin_color\": \"fair\",\n      \"eye_color\": \"blue\",\n      \"birth_year\": \"19BBY\",\n      \"gender\": \"male\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Persona no encontrada.\",\n  \"errors\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error interno del servidor.\",\n  \"error\": \"Detalles del error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "API | GET Planets",
+            "description": "",
+            "item": [
+                {
+                    "name": "Obtener una lista de planetas\n\nEste endpoint devuelve una lista paginada de planetas del universo de Star Wars.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/planets",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "5",
+                                    "description": "N\u00famero de registros por p\u00e1gina. Default: 10.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "offset",
+                                    "value": "10",
+                                    "description": "N\u00famero de registros a omitir. Default: 0.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/planets?limit=5&offset=10"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Operaci\u00f3n exitosa\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Tatooine\",\n      \"rotation_period\": \"23\",\n      \"orbital_period\": \"304\",\n      \"diameter\": \"10465\",\n      \"climate\": \"arid\",\n      \"gravity\": \"1 standard\",\n      \"terrain\": \"desert\",\n      \"surface_water\": \"1\",\n      \"population\": \"200000\"\n    }\n  ],\n  \"pagination\": {\n    \"total\": 60,\n    \"limit\": 10,\n    \"offset\": 0,\n    \"next\": \"\/api\/planets?limit=10&offset=10\",\n    \"previous\": null\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"No se encontraron planetas.\",\n  \"errors\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error interno del servidor.\",\n  \"error\": \"Detalles del error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Obtener los detalles de un planeta espec\u00edfico\n\nEste endpoint devuelve la informaci\u00f3n detallada de un planeta por su ID.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/planets\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/planets\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "El ID del planeta."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Operaci\u00f3n exitosa\",\n  \"data\": {\n      \"id\": 1,\n      \"name\": \"Tatooine\",\n      \"rotation_period\": \"23\",\n      \"orbital_period\": \"304\",\n      \"diameter\": \"10465\",\n      \"climate\": \"arid\",\n      \"gravity\": \"1 standard\",\n      \"terrain\": \"desert\",\n      \"surface_water\": \"1\",\n      \"population\": \"200000\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Planeta no encontrado.\",\n  \"errors\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error interno del servidor.\",\n  \"error\": \"Detalles del error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "API | GET Vehicles",
+            "description": "",
+            "item": [
+                {
+                    "name": "Obtener una lista de veh\u00edculos\n\nEste endpoint devuelve una lista paginada de veh\u00edculos de Star Wars.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/vehicles",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "5",
+                                    "description": "N\u00famero de registros por p\u00e1gina. Default: 10.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "offset",
+                                    "value": "10",
+                                    "description": "N\u00famero de registros a omitir. Default: 0.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/vehicles?limit=5&offset=10"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Operaci\u00f3n exitosa\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Speeder Bike\",\n      \"model\": \"74-Z speeder bike\",\n      \"manufacturer\": \"Aratech Repulsorlift Company\",\n      \"cost_in_credits\": \"5000\",\n      \"length\": \"3.4\",\n      \"max_atmosphering_speed\": \"200\",\n      \"crew\": \"1\",\n      \"passengers\": \"0\",\n      \"cargo_capacity\": \"4\",\n      \"consumables\": \"None\",\n      \"vehicle_class\": \"speeder bike\"\n    }\n  ],\n  \"pagination\": {\n    \"total\": 82,\n    \"limit\": 10,\n    \"offset\": 0,\n    \"next\": \"\/api\/vehicles?limit=10&offset=10\",\n    \"previous\": null\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"No se encontraron veh\u00edculos.\",\n  \"errors\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error interno del servidor.\",\n  \"error\": \"Detalles del error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Obtener los detalles de un veh\u00edculo espec\u00edfico\n\nEste endpoint devuelve la informaci\u00f3n detallada de un veh\u00edculo por su ID.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/vehicles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/vehicles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "El ID del veh\u00edculo."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Operaci\u00f3n exitosa\",\n  \"data\": {\n      \"id\": 1,\n      \"name\": \"Speeder Bike\",\n      \"model\": \"74-Z speeder bike\",\n      \"manufacturer\": \"Aratech Repulsorlift Company\",\n      \"cost_in_credits\": \"5000\",\n      \"length\": \"3.4\",\n      \"max_atmosphering_speed\": \"200\",\n      \"crew\": \"1\",\n      \"passengers\": \"0\",\n      \"cargo_capacity\": \"4\",\n      \"consumables\": \"None\",\n      \"vehicle_class\": \"speeder bike\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Veh\u00edculo no encontrado.\",\n  \"errors\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error interno del servidor.\",\n  \"error\": \"Detalles del error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}

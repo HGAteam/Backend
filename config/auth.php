@@ -116,4 +116,8 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    'storage' => [
+        'private_key' => storage_path('oauth-private.key'),
+        'public_key' => storage_path('oauth-public.key'),
+    ],
 ];
