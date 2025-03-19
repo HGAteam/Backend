@@ -1,0 +1,305 @@
+name: 'API Autenticación'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/login
+    metadata:
+      groupName: 'API Autenticación'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Iniciar sesión y obtener un token de acceso
+
+        Este endpoint permite iniciar sesión con un usuario registrado.  
+        Para acceder a los recursos protegidos de la API, debes usar el token generado en el encabezado `Authorization`.  
+
+        **IMPORTANTE:**  
+        - Si no tienes una cuenta, puedes registrarte utilizando el endpoint de registro.  
+        - También puedes solicitar un usuario de prueba.  
+        - Una vez autenticado, el token obtenido debe ser enviado en todas las solicitudes protegidas.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: 'El correo electrónico del usuario.'
+        required: true
+        example: usuario@ejemplo.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'La contraseña del usuario.'
+        required: true
+        example: secret
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      email: usuario@ejemplo.com
+      password: secret
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+            "token_type": "Bearer",
+            "expires_in": 3600
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Credenciales inválidas."
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/register
+    metadata:
+      groupName: 'API Autenticación'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Registrar un nuevo usuario
+
+        Este endpoint permite registrar un nuevo usuario en la API. No se necesita autenticación para esta solicitud.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'El nombre del usuario.'
+        required: true
+        example: 'Juan Pérez'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'El correo electrónico del usuario.'
+        required: true
+        example: usuario@ejemplo.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'La contraseña del usuario.'
+        required: true
+        example: secret
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'Confirmación de la contraseña.'
+        required: true
+        example: secret
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'Juan Pérez'
+      email: usuario@ejemplo.com
+      password: secret
+      password_confirmation: secret
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+            "status": "success",
+            "message": "Usuario registrado exitosamente.",
+            "user": {
+              "id": 1,
+              "name": "Juan Pérez",
+              "email": "usuario@ejemplo.com"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+            "status": "error",
+            "message": "Error en la validación.",
+            "errors": {
+              "email": ["El campo email es obligatorio."]
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/logout
+    metadata:
+      groupName: 'API Autenticación'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Cerrar sesión del usuario autenticado
+
+        Este endpoint permite cerrar la sesión de un usuario autenticado.  
+        Se debe enviar un **token válido** en el encabezado `Authorization`.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer <TOKEN>'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Sesión cerrada exitosamente."
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "No se pudo cerrar la sesión."
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/is-authenticated
+    metadata:
+      groupName: 'API Autenticación'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Verificar si el usuario está autenticado
+
+        Este endpoint permite verificar si el usuario está autenticado.  
+        Se debe enviar un **token válido** en el encabezado `Authorization`.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer <TOKEN>'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Usuario autenticado.",
+            "user": {
+              "id": 1,
+              "name": "Juan Pérez",
+              "email": "usuario@ejemplo.com"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Usuario no autenticado."
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

@@ -1,0 +1,205 @@
+name: 'API | GET Vehicles'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/vehicles
+    metadata:
+      groupName: 'API | GET Vehicles'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Obtener una lista de vehículos
+
+        Este endpoint devuelve una lista paginada de vehículos de Star Wars.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Accept: application/json
+      Authorization: 'Bearer <TOKEN>'
+      Content-Type: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      limit:
+        name: limit
+        description: 'Número de registros por página. Default: 10.'
+        required: false
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      offset:
+        name: offset
+        description: 'Número de registros a omitir. Default: 0.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      limit: 5
+      offset: 10
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Operación exitosa",
+            "data": [
+              {
+                "id": 1,
+                "name": "Speeder Bike",
+                "model": "74-Z speeder bike",
+                "manufacturer": "Aratech Repulsorlift Company",
+                "cost_in_credits": "5000",
+                "length": "3.4",
+                "max_atmosphering_speed": "200",
+                "crew": "1",
+                "passengers": "0",
+                "cargo_capacity": "4",
+                "consumables": "None",
+                "vehicle_class": "speeder bike"
+              }
+            ],
+            "pagination": {
+              "total": 82,
+              "limit": 10,
+              "offset": 0,
+              "next": "/api/vehicles?limit=10&offset=10",
+              "previous": null
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "No se encontraron vehículos.",
+            "errors": []
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "Error interno del servidor.",
+            "error": "Detalles del error"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/vehicles/{id}'
+    metadata:
+      groupName: 'API | GET Vehicles'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Obtener los detalles de un vehículo específico
+
+        Este endpoint devuelve la información detallada de un vehículo por su ID.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Accept: application/json
+      Authorization: 'Bearer <TOKEN>'
+      Content-Type: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'El ID del vehículo.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Operación exitosa",
+            "data": {
+                "id": 1,
+                "name": "Speeder Bike",
+                "model": "74-Z speeder bike",
+                "manufacturer": "Aratech Repulsorlift Company",
+                "cost_in_credits": "5000",
+                "length": "3.4",
+                "max_atmosphering_speed": "200",
+                "crew": "1",
+                "passengers": "0",
+                "cargo_capacity": "4",
+                "consumables": "None",
+                "vehicle_class": "speeder bike"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "Vehículo no encontrado.",
+            "errors": []
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "Error interno del servidor.",
+            "error": "Detalles del error"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
